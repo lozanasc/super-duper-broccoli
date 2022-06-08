@@ -45,8 +45,7 @@ class GoogleController extends Controller
                 return redirect('/dashboard');
             }
         } catch (Exception $e) {
-            dd($e->getMessage());
-            return redirect('/logout')->with('status', 'Something went wrong with the Social Login!');
+            return redirect('/')->with('status', 'Something went wrong with the Social Login!');
         }
     }
 }

@@ -115,7 +115,7 @@ Route::middleware([
     Route::get('/appointments/view/{id}', [AppointmentController::class, "view_appointment"])->name('view_appointment');
     Route::post('/appointments/update/{id}', [AppointmentController::class, "update_appointment"])->name('update_appointment');
     Route::get('/appointments/approve/{id}', [AppointmentController::class, "approve_appointment"])->name('approve_appointment');
-    Route::get('/appointments/accept/{id}/{type}', [AppointmentController::class, "accept_appointment"])->name('accept_appointment');
+    Route::get('/appointments/accept/{id}', [AppointmentController::class, "accept_appointment"])->name('accept_appointment');
     Route::get('/appointments/approved/{id}', [AppointmentController::class, "generate_appointment_receipt"])->name('generate');
 
     // ? Declarations

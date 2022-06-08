@@ -47,7 +47,7 @@
     @switch($appointment->status)
       @case("Pending")
         <a
-          href="{{ route('accept_appointment', [$appointment->id, $appointment->type]) }}"
+          href="{{ route('accept_appointment', $appointment->id) }}"
           type="submit"
           class="border border-green-500 bg-green-500 text-white rounded-md mr-2 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
         >

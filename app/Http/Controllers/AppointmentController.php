@@ -105,7 +105,7 @@ class AppointmentController extends Controller
     }
 
 
-    public function accept_appointment($id, $type){
+    public function accept_appointment($id){
         $currAppointment = Appointment::where('id', $id)
                 ->first();
         $update = Appointment::where('id', $id)
@@ -116,7 +116,7 @@ class AppointmentController extends Controller
             Notification::create([
                 'user' => $currAppointment->user,
                 'role' => "User",
-                'message' => "Your appointment has been accepted for service " . $type . " check your appointments to see requirements",
+                'message' => "Your appointment has been accepted for service " . $currAppointment->type . " check your appointments to see requirements",
                 'appointment_id' => $id
             ]);
             return redirect()->back()->with('status', 'Appointment accepted!');
