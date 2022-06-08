@@ -22,279 +22,340 @@
     @case("Accepted")
         @switch($appointment->type)
             @case("Provision of Services for the Appraisal and Assessment of New and Undeclared Real Property...")
-                <div class="bg-white py-2 px-6">
-                    <h1 class="leading-4 font-bold">
-                        REQUEST: Provision of Services for the Appraisal and Assessment of New and Undeclared Real Property Units 
-                        <br>
-                        including Machineries and for the Re-assessment of Renovated Building for Taxation Purposes.
-                    </h1>
-                    <p class="font-light italic">
-                        If requirements below are complete, this transaction can normally be completed in three (3) to four (4) working days.
-                    </p>
-                    <form action="{{ route("service1", $appointment->id) }}" method="POST" enctype="multipart/form-data">
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of approved Building Permit.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of approved building floor plans.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of certificate of occupancy.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Accomplished and duly notarized sworn statement of owner with itemized listing of machineries if any. (For machineries only)</span>
-                            <a href="{{Storage::url("forms/sworn.pdf")}}" class="text-gray-800 font-bold italic text-sm underline">Download Form Here</a>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">For renovated buildings, current Tax Clearance from City Treasurer’s Office.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <button
-                            type="submit"
-                            class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                        >
-                            Submit Requirements
-                        </button>
-                    </form>
-                </div>
+                @if ($appointment->complete === "Complete")
+                    <div class="bg-white min-h-full min-w-full px-8 py-6">
+                        <div class="bg-gray-200 p-4 rounded-lg mb-2">
+                        <h1 class="text-lg font-bold mb-1 text-gray-700 block">Requirements have been submitted!</h1>
+                        <p class="font-light mb-1 text-gray-800 block">Check your notifications for approval!</p>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-white py-2 px-6">
+                        <h1 class="leading-4 font-bold">
+                            REQUEST: Provision of Services for the Appraisal and Assessment of New and Undeclared Real Property Units 
+                            <br>
+                            including Machineries and for the Re-assessment of Renovated Building for Taxation Purposes.
+                        </h1>
+                        <p class="font-light italic">
+                            If requirements below are complete, this transaction can normally be completed in three (3) to four (4) working days.
+                        </p>
+                        <form action="{{ route("service1", $appointment->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                @error('consolidation_plan')
+                                    <div class="text-red-500 font-bold py-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <span class="text-gray-800 font-bold">One (1) copy of approved Building Permit.</span>
+                                <input
+                                    name="consolidation_plan"
+                                    id="consolidation_plan"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">One (1) copy of approved building floor plans.</span>
+                                <input
+                                    name="deed"
+                                    id="deed"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">One (1) copy of certificate of occupancy.</span>
+                                <input
+                                    name="transfer_cert"
+                                    id="transfer_cert"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Accomplished and duly notarized sworn statement of owner with itemized listing of machineries if any. (For machineries only)</span>
+                                <a href="{{Storage::url("forms/sworn.pdf")}}" class="text-gray-800 font-bold italic text-sm underline">Download Form Here</a>
+                                <input
+                                    name="tax_clearance"
+                                    id="tax_clearance"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">For renovated buildings, current Tax Clearance from City Treasurer’s Office.</span>
+                                <input
+                                    name="tax_receipt"
+                                    id="tax_receipt"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <button
+                                type="submit"
+                                class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                            >
+                                Submit Requirements
+                            </button>
+                        </form>
+                    </div>
+                @endif
                 @break
             @case("Provisions of Services for the Transfer/Segregation/Consolidation of Tax Declaration...")
-                <div class="bg-white py-2 px-6">
-                    <h1 class="leading-4 font-bold">
-                        REQUEST: Provisions of Services for the Transfer/Segregation/Consolidation of Tax Declaration of Donated/Sold/Subdivided/Consolidated Lots
-                    </h1>
-                    <p class="font-light italic">
-                        If requirements below are complete, this transaction can normally be completed in three (3) to five (5) working days.
-                    </p>
-                    <form action="{{ route("service1", $appointment->id) }}" method="POST" enctype="multipart/form-data">
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of approved subdivision/consolidation plan.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of Extra-judicial Settlement/Deed of Partition/Deed of sale and other deed of conveyance (as applicable).</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">One (1) copy of Transfer Certificate of Title (if registered property).</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Current Tax Clearance from City Treasurer’s Office.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Transfer Tax payment receipt.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Petition form, accomplished and notarized.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Certificate Authorizing Registration (CAR), BIR.</span>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <button
-                            type="submit"
-                            class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                        >
-                            Submit Requirements
-                        </button>
-                    </form>
-                </div>
+                @if ($appointment->complete === "Complete")
+                    <div class="bg-white min-h-full min-w-full px-8 py-6">
+                        <div class="bg-gray-200 p-4 rounded-lg mb-2">
+                        <h1 class="text-lg font-bold mb-1 text-gray-700 block">Requirements have been submitted!</h1>
+                        <p class="font-light mb-1 text-gray-800 block">Check your notifications for approval!</p>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-white py-2 px-6">
+                        <h1 class="leading-4 font-bold">
+                            REQUEST: Provisions of Services for the Transfer/Segregation/Consolidation of Tax Declaration of Donated/Sold/Subdivided/Consolidated Lots
+                        </h1>
+                        <p class="font-light italic">
+                            If requirements below are complete, this transaction can normally be completed in three (3) to five (5) working days.
+                        </p>
+                        <form action="{{ route("service2", $appointment->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">One (1) copy of approved subdivision/consolidation plan.</span>
+                                <input
+                                    name="consolidation_plan"
+                                    id="consolidation_plan"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">One (1) copy of Extra-judicial Settlement/Deed of Partition/Deed of sale and other deed of conveyance (as applicable).</span>
+                                <input
+                                    name="deed"
+                                    id="deed"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">One (1) copy of Transfer Certificate of Title (if registered property).</span>
+                                <input
+                                    name="transfer_cert"
+                                    id="transfer_cert"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Current Tax Clearance from City Treasurer’s Office.</span>
+                                <input
+                                    name="tax_clearance"
+                                    id="tax_clearance"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Transfer Tax payment receipt.</span>
+                                <input
+                                    name="tax_receipt"
+                                    id="tax_receipt"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Petition form, accomplished and notarized.</span>
+                                <input
+                                    name="petition_form"
+                                    id="petition_form"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Certificate Authorizing Registration (CAR), BIR.</span>
+                                <input
+                                    name="cert_auth_reg"
+                                    id="cert_auth_reg"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <button
+                                type="submit"
+                                class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                            >
+                                Submit Requirements
+                            </button>
+                        </form>
+                    </div>
+                @endif
                 @break
             @case("Issuance of Certified Photocopies and Certifications of Real Property Units...")
-                <div class="bg-white py-2 px-6">
-                    <h1 class="leading-5 font-bold">
-                        REQUEST: Issuance of Certified Photocopies and Certifications of Real Property Units 
-                        <br>
-                        (Certificate of total landholdings, and Certificate of Improvements with or without)
-                    </h1>
-                    <p class="font-light italic">
-                        Upon payment of required fees, this transaction can normally be completed in one (1) working day.
-                    </p>
-                    <p class="font-normal mt-4">
-                        <strong>FEES:</strong><br>
-                        <strong>Certified True Copy of Tax Declaration</strong> (P25.00) each plus documentary stamp <br>
-                        <strong>Certificate of Improvements (with or without)</strong> (P50.00) each plus documentary stamp <br>
-                        <strong>Certificate of Total Landholdings</strong> (P50.00) each plus documentary stamp <br>
-                    </p>
-                    <form action="{{ route("service1", $appointment->id) }}" method="POST" enctype="multipart/form-data">
-                        <label class="block mt-4 p-2 bg-gray-200 rounded-md">
-                            <span class="text-gray-800 font-bold">Request Form</span>
+                @if ($appointment->complete === "Complete")
+                    <div class="bg-white min-h-full min-w-full px-8 py-6">
+                        <div class="bg-gray-200 p-4 rounded-lg mb-2">
+                        <h1 class="text-lg font-bold mb-1 text-gray-700 block">Requirements have been submitted!</h1>
+                        <p class="font-light mb-1 text-gray-800 block">Check your notifications for approval!</p>
+                        </div>
+                    </div>
+                @else
+                    <div class="bg-white py-2 px-6">
+                        <h1 class="leading-5 font-bold">
+                            REQUEST: Issuance of Certified Photocopies and Certifications of Real Property Units 
                             <br>
-                            <a href="{{Storage::url("forms/request.pdf")}}" class="text-gray-800 font-bold italic text-sm underline">Download Form Here</a>
-                            <input
-                                type="file"
-                                class="
-                                mt-1
-                                block
-                                w-full
-                                rounded-md
-                                border-gray-300
-                                shadow-sm
-                                focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
-                                "
-                                placeholder=""
-                            />
-                        </label>
-                        <button
-                            type="submit"
-                            class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
-                        >
-                            Submit Requirement
-                        </button>
-                    </form>
-                </div>
+                            (Certificate of total landholdings, and Certificate of Improvements with or without)
+                        </h1>
+                        <p class="font-light italic">
+                            Upon payment of required fees, this transaction can normally be completed in one (1) working day.
+                        </p>
+                        <p class="font-normal mt-4">
+                            <strong>FEES:</strong><br>
+                            <strong>Certified True Copy of Tax Declaration</strong> (P25.00) each plus documentary stamp <br>
+                            <strong>Certificate of Improvements (with or without)</strong> (P50.00) each plus documentary stamp <br>
+                            <strong>Certificate of Total Landholdings</strong> (P50.00) each plus documentary stamp <br>
+                        </p>
+                        <form action="{{ route("service3", $appointment->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <label class="block mt-4 p-2 bg-gray-200 rounded-md">
+                                <span class="text-gray-800 font-bold">Request Form</span>
+                                <br>
+                                <a href="{{Storage::url("forms/request.pdf")}}" class="text-gray-800 font-bold italic text-sm underline">Download Form Here</a>
+                                <input
+                                    name="form"
+                                    id="form"
+                                    type="file"
+                                    class="
+                                    mt-1
+                                    block
+                                    w-full
+                                    rounded-md
+                                    border-gray-300
+                                    shadow-sm
+                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50
+                                    "
+                                    placeholder=""
+                                />
+                            </label>
+                            <button
+                                type="submit"
+                                class="border border-green-500 bg-green-500 text-white rounded-md mt-4 px-4 py-2 transition duration-500 ease select-none hover:bg-green-600 focus:outline-none focus:shadow-outline"
+                            >
+                                Submit Requirement
+                            </button>
+                        </form>
+                    </div>
+                @endif
                 @break
             @case("Provision of Services for the Research of Old Tax Declaration")
                 <div class="bg-white py-2 px-6">
@@ -314,9 +375,7 @@
                 </div>
                 @break
             @default
-                
         @endswitch
-        
         @break
     @case("Approved")
         <section class="text-gray-600 body-font">

@@ -47,7 +47,7 @@
                             <x-jet-nav-link href="{{ route('view_feedback') }}" :active="request()->routeIs('view_feedback')">
                                 Feedbacks
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('view_feedback') }}" :active="request()->routeIs('view_feedback')">
+                            <x-jet-nav-link href="{{ route('view_declarations') }}" :active="request()->routeIs('view_declarations')">
                                 Tax Declarations
                             </x-jet-nav-link>
                             @break

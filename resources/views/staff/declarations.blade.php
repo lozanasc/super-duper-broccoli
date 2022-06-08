@@ -197,7 +197,7 @@
 @if(count($declarations) > 0)
 <div class="flex flex-col px-8">
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <form action="{{ route("add_declaration") }}" method="POST" class="bg-white px-6">
+    <form action="{{ route("search_declaration") }}" method="POST" class="bg-white px-6">
     @csrf
     <label class="block mt-2 p-2 rounded-md">
         <span class="text-gray-800 font-bold">Search tax declarations by owner</span>

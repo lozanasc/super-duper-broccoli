@@ -67,8 +67,8 @@
   <div class="container mx-auto flex px-5 py-4 items-center justify-center flex-col">
     <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F02%2F4f%2F63%2F024f63e4dae01e0d6fcf6b4a61ac4a16.png&f=1&nofb=1">
     <div class="text-center lg:w-2/3 w-full">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">All done!</h1>
-      <p class="mb-8 leading-relaxed">You deserve a break!</p>
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Nothing to see here!</h1>
+      <p class="mb-8 leading-relaxed">Go get coffee or something...</p>
     </div>
   </div>
 </section>

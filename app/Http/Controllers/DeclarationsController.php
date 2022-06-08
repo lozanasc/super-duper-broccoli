@@ -35,16 +35,20 @@ class DeclarationsController extends Controller
     }
 
     public function search_declaration(Request $request){
-        $role = auth()->user()->role;
-
-        if($role === "User")
-            return redirect('/dashboard')->with('status', 'Not allowed!');
-        else {
-            $search_for = $request->only('query');
-            $declarations = Declarations::where('owner', $search_for)->get();
-            return view('staff.declarations',[
-                "declarations" => $declarations
-            ]);
+        try {
+            $role = auth()->user()->role;
+    
+            if($role === "User")
+                return redirect('/dashboard')->with('status', 'Not allowed!');
+            else {
+                $search_for = $request->only('query');
+                $declarations = Declarations::where('owner', $search_for)->get();
+                return view('staff.declarations',[
+                    "declarations" => $declarations
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return redirect('/declarations');
         }
     }
 

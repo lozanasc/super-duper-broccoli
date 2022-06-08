@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\Requirements;
 use App\Models\Notification;
 use \Carbon\Carbon;
 
@@ -29,13 +30,19 @@ class AppointmentController extends Controller
                 'type' => $request->type,
                 'schedule' => $request->schedule,
                 'status' => "Pending",
-                'complete' => "Incomplete",
+                'complete' => $request->type === "Provision of Services for the Research of Old Tax Declaration" ? "Complete" : "Incomplete",
                 'notes' => ""
             ]);
             if($init_appointment){
                 Notification::create([
                     'user' => auth()->user()->name,
                     'role' => "Admin",
+                    'message' => "New appointment of type " . $request->type . " from User " . auth()->user()->name,
+                    'appointment_id' => $init_appointment->id
+                ]);
+                Notification::create([
+                    'user' => auth()->user()->name,
+                    'role' => "Staff",
                     'message' => "New appointment of type " . $request->type . " from User " . auth()->user()->name,
                     'appointment_id' => $init_appointment->id
                 ]);
@@ -76,7 +83,7 @@ class AppointmentController extends Controller
             case 'Admin':
                 if($cancel_appoinment){
                     Notification::create([
-                        'user' => auth()->user()->name,
+                        'user' => $cancelled_appoinment->user,
                         'role' => "User",
                         'message' => "Your appointment " . $cancelled_appoinment->type . " has been rejected ",
                         'appointment_id' => $cancelled_appoinment->id
@@ -88,7 +95,7 @@ class AppointmentController extends Controller
             case 'Staff':
                 if($cancel_appoinment){
                     Notification::create([
-                        'user' => auth()->user()->name,
+                        'user' => $cancelled_appoinment->user,
                         'role' => "User",
                         'message' => "Your appointment " . $cancelled_appoinment->type . " has been rejected ",
                         'appointment_id' => $cancelled_appoinment->id
@@ -172,7 +179,7 @@ class AppointmentController extends Controller
                 ]);
             case 'Staff':
                 $allAppointments = Appointment::get();
-                return view('staff.appointments', [
+                return view('admin.appointments', [
                     'appointment' => $allAppointments
                 ]);
             default:
@@ -183,6 +190,7 @@ class AppointmentController extends Controller
     public function view_appointment($id){
         $role = auth()->user()->role;
         $appointment = Appointment::where('id', $id)->first();
+        $requirements = Requirements::where('appointment_id', $id)->first();
         switch ($role) {
             case 'User':
                 if(!$appointment)
@@ -193,12 +201,12 @@ class AppointmentController extends Controller
                 if(!$appointment)
                     return redirect()->back()->with('status', 'Appointment not found!');
                 else
-                    return view('admin.view', [ 'appointment' => $appointment ]);
+                    return view('admin.view', [ 'appointment' => $appointment, 'requirements' => $requirements ]);
             case 'Staff':
                 if(!$appointment)
                     return redirect()->back()->with('status', 'Appointment not found!');
                 else
-                    return view('staff.view', [ 'appointment' => $appointment ]);
+                    return view('admin.view', [ 'appointment' => $appointment, 'requirements' => $requirements ]);
             default:
                 return redirect('/')->with('status', 'Not allowed!');
         }

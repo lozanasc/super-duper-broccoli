@@ -122,11 +122,11 @@ Route::middleware([
     Route::get('/declarations', [DeclarationsController::class, "view_declarations"])->name('view_declarations');
     Route::get('/declarations/view/{id}', [DeclarationsController::class, "view_declaration"])->name('view_declaration');
     Route::get('/declarations/delete/{id}', [DeclarationsController::class, "delete_declaration"])->name('delete_declaration');
+    Route::post('/declarations', [DeclarationsController::class, "search_declaration"])->name('search_declaration');
     Route::post('/declarations/new', [DeclarationsController::class, "add_declaration"])->name('add_declaration');
 
     // ? Requirements
     Route::post('/requirements/service/1/{id}', [RequirementsController::class, "service1"])->name('service1');
     Route::post('/requirements/service/2/{id}', [RequirementsController::class, "service2"])->name('service2');
     Route::post('/requirements/service/3/{id}', [RequirementsController::class, "service3"])->name('service3');
-    Route::post('/requirements/service/4/{id}', [RequirementsController::class, "service4"])->name('service4');
 });
