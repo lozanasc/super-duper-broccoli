@@ -157,6 +157,12 @@ class AppointmentController extends Controller
                 'message' => "Your appointment has been approved for service " . $currAppointment->type . "check your appointments to print receipt!",
                 'appointment_id' => $id
             ]);
+            Notification::create([
+                'user' => auth()->user()->name,
+                'role' => "Admin",
+                'message' => $currAppointment->type . " approved!",
+                'appointment_id' => $id
+            ]);
             return redirect()->back()->with('status', 'Appointment approved!');
         }
         else
@@ -165,7 +171,6 @@ class AppointmentController extends Controller
 
     public function view_appointments(){
         $role = auth()->user()->role;
-
         switch ($role) {
             case 'User': 
                 $userAppointments = Appointment::where('user', auth()->user()->name)->get();

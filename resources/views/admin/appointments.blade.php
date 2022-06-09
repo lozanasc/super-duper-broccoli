@@ -37,6 +37,12 @@
                   Status
                 </th>
                 <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  Approved By
+                </th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  Date Approved
+                </th>
+                <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                   Actions
                 </th>
               </tr>
@@ -70,6 +76,20 @@
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     {{ $item->schedule }}
+                  </td>
+                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    @if($item->status === "Approved")
+                      {{ App\Models\Notification::where('appointment_id', $item->id)->where('role', "User")->first()->user ?? "N/A"}}
+                    @else
+                      N/A
+                    @endif
+                  </td>
+                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                    @if($item->status === "Approved")
+                      {{ App\Models\Notification::where('appointment_id', $item->id)->where('role', "User")->first()->created_at ?? "N/A"}}
+                    @else
+                      N/A
+                    @endif
                   </td>
                   <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                     <a href="{{ route('cancel_appointment', $item->id) }}" class="bg-red-500 p-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
